@@ -1,0 +1,37 @@
+<!doctype HTML>
+<html>
+<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"> </script>
+
+  <body style='margin : 0px; overflow: hidden;'>
+    <a-scene embedded arjs='sourceType: webcam; detectionMode: mono; trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: true">
+      <a-assets>
+          <video  crossOrigin="anonymous"  id="vid" loop="true" type="video/mp4" src="campus.mp4">
+      </a-assets>
+      <a-marker preset='custom' type='pattern' patternUrl='vm.patt' >
+          <a-video id="animated-model" position='0 0.5 0' src="#vid" width="1.78" height="1" rotation="270 0 0" play="true" ></a-video>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+    
+            var mark = document.querySelector("body");
+            var video = document.querySelector('#vid');
+    
+            var isPlaying = false
+
+            mark.onclick = function() {
+                if(isPlaying) {
+                    video.pause();
+                    isPlaying = false
+                }else {
+                    video.play();
+                    isPlaying = true;
+                }
+            }
+       
+    </script>
+  </body>
+</html>
