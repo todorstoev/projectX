@@ -6,14 +6,15 @@
       <meta name="apple-mobile-web-app-capable" content="yes">
   </head>
 <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
-<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"> </script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"> </script>
 
   <body style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs='sourceType: webcam; detectionMode: mono; trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: true">
+
       <a-assets>
-          <video  crossOrigin="anonymous"  id="vid" loop="true" type="video/mp4" src="preflight.mp4">
+          <video crossOrigin="anonymous"  id="vid" loop="true" type="video/mp4" src="preflight.mp4">
       </a-assets>
-      <a-marker preset='custom' type='pattern' patternUrl='vm.patt' >
+      <a-marker preset='custom' type='pattern' url='./pattern-marker.patt' >
           <a-video id="animated-model" src="#vid" width="1.78" height="1" rotation="270 0 0" play="true" playsinline ></a-video>
       </a-marker>
 
@@ -21,6 +22,7 @@
     </a-scene>
 
     <script> 
+
             var mark = document.querySelector("body");
             var video = document.querySelector('#vid');
 

@@ -1,5 +1,5 @@
 {
 	"name": "Projectx",
 	"version": 2,
-	"builds": [ { "src": "index.html", "use": "@now/static" }, { "src": "campus.mp4", "use": "@now/static" } ]
+	"builds": [ { "src": "index.html", "use": "@now/static" }, { "src": "preflight.mp4", "use": "@now/static" } ]
 }
