@@ -2,5 +2,9 @@
 	"name": "Projectx",
 	"version": 2,
 	"alias": [ "prx.now.sh" ],
-	"builds": [ { "src": "index.html", "use": "@now/static" }, { "src": "preflight.mp4", "use": "@now/static" } ]
+	"builds": [
+		{ "src": "index.html", "use": "@now/static" },
+		{ "src": "preflight.mp4", "use": "@now/static" },
+		{ "src": "pattern-marker.patt", "use": "@now/static" }
+	]
 }
