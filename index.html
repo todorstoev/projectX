@@ -6,7 +6,7 @@
       <meta name="apple-mobile-web-app-capable" content="yes">
   </head>
 <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"> </script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/dev/aframe/build/aframe-ar.js"></script>
 
   <body style='margin : 0px; overflow: hidden;'>
     <a-scene embedded arjs='sourceType: webcam; detectionMode: mono; trackingMethod: best;debugUIEnabled: false;' vr-mode-ui="enabled: ">
@@ -14,29 +14,40 @@
       <a-assets>
           <video crossOrigin="anonymous"  id="vid" autoplay type="video/mp4" src="preflight.mp4">
       </a-assets>
-      <a-marker preset='custom' type='pattern' url='./pattern-marker.patt' >
-          <a-video id="animated-model" src="#vid" width="1.78" height="1" rotation="270 0 0" play="true" playsinline ></a-video>
+      <a-marker  cursor="rayOrigin: mouse" id="animated-marker" preset='custom' type='pattern' url='./pattern-marker.patt' >
+          <a-video id="animated-model" src="#vid" width="1.78" height="1" rotation="270 0 0" play="true" playsinline webkit-playsinline></a-video>
       </a-marker>
 
       <a-entity camera></a-entity>
     </a-scene>
 
-    <script> 
+    <script>
 
-            var mark = document.querySelector("body");
+            // var mark = document.querySelector("body");
             var video = document.querySelector('#vid');
+            var m = document.querySelector("a-marker")
+
 
             var isPlaying = false
 
-            mark.onclick = function() {
-                if(isPlaying) {
-                    video.pause();
-                    isPlaying = false
-                }else {
-                    video.play();
-                    isPlaying = true;
-                }
-            }
+            // mark.onclick = function() {
+            //     if(isPlaying) {
+            //         video.pause();
+            //         isPlaying = false
+            //     }else {
+            //         video.play();
+            //         isPlaying = true;
+            //     }
+            // }
+
+            
+            m.addEventListener("markerFound", (e)=>{
+              video.play();
+            })
+
+            m.addEventListener("markerLost", (e)=>{
+              video.pause();
+            })
 
     </script>
   </body>
