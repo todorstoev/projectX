@@ -5,6 +5,8 @@
 	"builds": [
 		{ "src": "index.html", "use": "@now/static" },
 		{ "src": "preflight.mp4", "use": "@now/static" },
-		{ "src": "pattern-marker.patt", "use": "@now/static" }
+		{ "src": "pattern-marker.patt", "use": "@now/static" },
+		{ "src": "volume-mute-solid.svg", "use": "@now/static" },
+		{ "src": "volume-up-solid.svg", "use": "@now/static" }
 	]
 }
