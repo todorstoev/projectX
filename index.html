@@ -9,15 +9,31 @@
           width: 100vw;
           height: 100vh;
         }
-        .volume {
+        .buttons-wrapper {
+          height: 0;
+          position: fixed;
+          align-items: center;
+          justify-content: space-evenly;
+          bottom:0;
+          left: 0;
+          background: #fff3;
+          display: flex;
+          width: 100%;
+          z-index: 20;
+          overflow: hidden;
+          transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .buttons-wrapper.visible {
+          height: 14vh;
+        }
+        .button {
           background: linear-gradient(to right, rgb(127, 127, 213), rgb(134, 168, 231), rgb(145, 234, 228));
           border-radius: 360px;
+          border:none;
           z-index: 30;
           width: 10vh;
+          position: relative;
           height: 10vh;
-          position: fixed;
-          bottom:5vh;
-          right: 5vh;
           -webkit-box-shadow: 0 10px 6px -6px #777;
           -moz-box-shadow: 0 10px 6px -6px #777;
           box-shadow: 0 10px 6px -6px #777;
@@ -30,7 +46,7 @@
         }
       
         .volume.muted:before {
-          content: url('volume-mute-solid.svg');
+          content: url('icons/volume-mute-solid.svg');
           width:60%;
           position: absolute;
           margin-left: auto;
@@ -40,7 +56,7 @@
           top:20%;
         }
         .volume.unmuted:before {
-          content: url('volume-up-solid.svg');
+          content: url('icons/volume-up-solid.svg');
           width:60%;
           position: absolute;
           margin-left: auto;
@@ -50,20 +66,44 @@
           top:22%;
           /* background: center / 70% no-repeat url('./volume-up-solid.svg') ; */
         }
+        .play.playing:before {
+          content: url('icons/pause-solid.svg');
+          width:40%;
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 0;
+          right: 0;
+          top:27%;
+        }
+        .play.paused:before {
+          content: url('icons/play-solid.svg');
+          width:40%;
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 10px;
+          right: 0;
+           top: 27%;
+          /* background: center / 70% no-repeat url('./volume-up-solid.svg') ; */
+        }
       </style>
   </head>
 <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
 <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/dev/aframe/build/aframe-ar.js"></script>
 
   <body style='margin : 0px; overflow: hidden;'>
-    <div class="volume muted"></div>
+    <div class="buttons-wrapper">
+      <button class="button play paused"></button>
+      <button class="button volume muted"></button>
+    </div>
     <a-scene embedded arjs='sourceType: webcam; detectionMode: mono; trackingMethod: best;debugUIEnabled: false;' vr-mode-ui="enabled: false">
 
       <a-assets>
-          <video crossOrigin="anonymous"  id="vid" preload="metadata" loop muted playsinline  webkit-playsinline autoplay type="video/mp4" src="preflight.mp4">
+          <video crossOrigin="anonymous" preload="none" playsinline  id="vid" type="video/mp4" poster="icons/thumb.jpg" src="preflight.mp4">
       </a-assets>
-      <a-marker  cursor="rayOrigin: mouse" id="animated-marker" preset='custom' type='pattern' url='./pattern-marker.patt' >
-          <a-video id="animated-model" src="#vid" width="1.78" height="1" rotation="270 0 0" play="true"></a-video>
+      <a-marker  cursor="rayOrigin: mouse"  id="animated-marker" preset='custom' type='pattern' url='./pattern-marker.patt'  >
+          <a-video id="animated-model" src="#vid" width="1.78" height="1" rotation="270 0 0" play="false"></a-video>
       </a-marker>
 
       <a-entity camera></a-entity>
@@ -71,12 +111,25 @@
 
     <script>
 
-            var body = document.querySelector("body");
+            // var body = document.querySelector("body");
             var video = document.querySelector('#vid');
             var mark = document.querySelector("a-marker");
             var muteIcon = document.querySelector('.volume');
-            var isPlaying = false;
+            var playIcon = document.querySelector('.play');
+            var butWrapper = document.querySelector('.buttons-wrapper');
 
+
+            playIcon.addEventListener('click',()=>{
+              if(!video.paused) {
+                video.pause();
+                playIcon.classList.remove('playing')
+                playIcon.classList.add('paused')
+              }else {
+                video.play();
+                playIcon.classList.remove('paused')
+                playIcon.classList.add('playing')
+              }
+            },{passive:true})
 
 
 
@@ -93,12 +146,16 @@
             },{passive:true})
 
             mark.addEventListener("markerFound", (e)=>{
-              video.play();
-            })
+              // video.play();
+              butWrapper.classList.add('visible');
+            },{passive:true})
 
             mark.addEventListener("markerLost", (e)=>{
               video.pause();
-            })
+              playIcon.classList.remove('playing')
+              playIcon.classList.add('paused')
+              butWrapper.classList.remove('visible');
+            },{passive:true})
 
     </script>
   </body>
