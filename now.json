@@ -5,10 +5,7 @@
 	"builds": [
 		{ "src": "index.html", "use": "@now/static" },
 		{ "src": "pattern-marker.patt", "use": "@now/static" },
-		{ "src": "icons/volume-mute-solid.svg", "use": "@now/static" },
-		{ "src": "icons/volume-up-solid.svg", "use": "@now/static" },
-		{ "src": "icons/play-solid.svg", "use": "@now/static" },
-		{ "src": "icons/thumb.jpg", "use": "@now/static" },
-		{ "src": "icons/pause-solid.svg", "use": "@now/static" }
+		{ "src": "preflight.mp4", "use": "@now/static" },
+		{ "src": "icons/thumb.jpg", "use": "@now/static" }
 	]
 }
